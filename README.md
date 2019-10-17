@@ -12,7 +12,7 @@ Anyone that might enjoy a card game from ages 4-99+
 * As a user I want to be able to refresh a card without any latency.
 * As a user I want the ecard console to keep track of my game score.
 * As a user I want the ecards to update to a different game in less than 5 seconds.
-* As a user I want 
+* As a user I want to be able to 
 
 ## MVP
 The basic and minimum need for this product is to have a method of refreshing cards without latency and update the whole digital deck without latency. The functionality shall be seamless as it would be when using a normal paper card deck.
