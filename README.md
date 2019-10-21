@@ -26,6 +26,8 @@ This idea has already been patented and the patent is now abandoned which makes 
 # System Design
 The implementation of this product will be mainly through the use of e-paper displays to display each card value. This technology is the ideal candidate for this implementation as it is very low power and it mimics the look of ink on paper. The system will need a central computer to manage and store the card games, which will be implemented with the use of a small microcontroller or a single board computer enabled with a wifi or bluetooth module in order to communicate with the ecards.
 
+![SystemDesign](AnycardSystemDesign.png)
+
 ## E Cards
 The electronic cards would be implemented using electronic paper, a technology that uses very low power consumption, is flexible and mimics the look of real paper. Electronic paper uses electronic ink which is comprised of millions of microcapsules that contain a positive or negative charge, the electronic paper
 
