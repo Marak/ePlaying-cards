@@ -47,4 +47,4 @@ The application will have a deck controller which will be tasked with game manag
 
 
 ## Software Architecture
-The software 
+![SoftwareDesign](SoftwareDesign.png)
