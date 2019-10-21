@@ -45,15 +45,25 @@ The UI will be implemented through a touch screen integrated within the Deck Doc
 ## Players
 In the system design below notice Player 1 and Player 2 are shown with ecards representing the hand for each player. The ecards will be equipped with an RFID tag which will be used by the Anycard Deck Dock to identify the card that was played and what card value it contains. The players will need to interface with the card port in order to refresh the cards and continue game play.
 
-## Software Stack
-The software within the application will be tasked with managing the game while at the same time communicating with the ecard interface in order to properly account for game score and card values.
-
-# Software Design
-The software implementation will consist of two main components as shown below: the GUI and the eCard driver. The GUI component will be implemented initially as a touch screen interface integrated with the Deck Dock
+## Software Design
+The software within the application will be tasked with managing the game while at the same time communicating with the ecard interface in order to properly account for game score and card values.The software implementation will consist of two main components as shown below: the GUI and the eCard driver.
 ![SoftwareDesign](SoftwareDesign.png)
 
+### GUI
+The GUI component will be implemented initially as a touch screen interface integrated with the Deck Dock, allowing the user to select games and game settings. The interface will be implemented as a simple python application. The application will be directly communicating with both the game engine and the Deck Dock.
+
+### eCard Driver
+The software for this component will handle the interaction between the ecards and the game engine.
+
+### Game Engine
+The game engine component will be resposible for all tasks related to game play and game rules. It will be the base framework for the system and will implement the functionalities specified section: 
+[Deck Dock Controller](#Deck-Dock-Controller)
+
+### Games
+Each game rule set will be a separate component in order have the ability to scale up each game and the game engine component simultaneously. Each game should be easy integrated into the application.
+
 # MVP
-The basic and minimum need for this product is to have a method of refreshing cards without latency and update the digital deck of at least 4 electronic cards without latency. The functionality shall be seamless as it would be when using a normal paper card deck. The end goal is to have wireless functionality between the digital card deck
+The basic and minimum need for this product is to have a method of refreshing cards without latency and update the digital deck of at least 4 electronic cards without latency. The functionality shall be seamless as it would be when using a normal paper card deck. For game play, the goal is to create a simple prototype game which will show case the functionality of each of the components listed above. 
 
 # E Cards Techonology
 The electronic cards would be implemented using electronic paper, a technology that uses very low power consumption, is flexible and mimics the look of real paper. Electronic paper uses electronic ink which is comprised of millions of microcapsules that contain a positive or negative charge, when provided a charge, the microcapsules move through a microscopic liquid towards the face of the card.
