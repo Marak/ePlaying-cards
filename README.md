@@ -32,6 +32,7 @@ The implementation of this product will be mainly through the use of e-paper dis
 The electronic cards would be implemented using electronic paper, a technology that uses very low power consumption, is flexible and mimics the look of real paper. Electronic paper uses electronic ink which is comprised of millions of microcapsules that contain a positive or negative charge, the electronic paper
 
 ![Image showing simple explanation of how epaper displays function.](https://www.smartcity-displays.com/wp-content/uploads/2017/07/how-does-e-paper-work-1.gif)
+Source: https://www.smartcity-displays.com/wp-content/uploads/2017/07/how-does-e-paper-work-1.gif
 
 ## Deck Controller
 The application will have a deck controller which will be tasked with game management. The operations for game management are the following:
@@ -42,9 +43,6 @@ The application will have a deck controller which will be tasked with game manag
 * Game selection
 * Score management
 * Keep memory of card distribution and card graveyard
-
-### Controller Processor
-
 
 ## Software Architecture
 ![SoftwareDesign](SoftwareDesign.png)
