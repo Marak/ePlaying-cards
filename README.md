@@ -17,19 +17,10 @@ Anyone that might enjoy a card game from ages 4-99+
 * As a player, I want to be able to play games of up to four people.
 * As a player, I want to have an interface to setup games.
 
-## Patent Implication
-This idea has already been patented and the patent is now abandoned which makes this a public patent idea to be used by anyone. Althouhg options exist if specific technologies are implemented that give the product a new 
-
 # System Design
 The implementation of this product will be mainly through the use of e-paper displays to display each card value. This technology is the ideal candidate for this implementation as it is very low power and it mimics the look of ink on paper. The system will need a central computer to manage and store the card games, which will be implemented with the use of a small microcontroller or a single board computer enabled with a wifi, bluetooth or RFID module in order to communicate with the ecards. Please see the system design diagram below and a description of the product flow and of each component:
 
 ![SystemDesign](AnycardSystemDesign.png)
-
-## E Cards Techonology
-The electronic cards would be implemented using electronic paper, a technology that uses very low power consumption, is flexible and mimics the look of real paper. Electronic paper uses electronic ink which is comprised of millions of microcapsules that contain a positive or negative charge, the electronic paper
-
-![Image showing simple explanation of how epaper displays function.](https://www.smartcity-displays.com/wp-content/uploads/2017/07/how-does-e-paper-work-1.gif)
-* Source: https://www.smartcity-displays.com/wp-content/uploads/2017/07/how-does-e-paper-work-1.gif
 
 ## Product Flow
 At the start of a game, each player will have a number of cards that will initially be flushed or wiped out from any content. The player must then select a game to play using the user interface integrated into the Deck Dock, the player must place their cards within the card ports to shuffle their hand and the Deck Dock should provide the players with a unique set of cards according to the chosen game. As the players begin to play and a card needs to be drawn, players shall place the played card in the card port to refresh the card value to an unused card in the game.
@@ -61,5 +52,11 @@ The software within the application will be tasked with managing the game while 
 The software implementation will consist of two main components as shown below: the GUI and the eCard driver. The GUI component will be implemented initially as a touch screen interface integrated with the Deck Dock
 ![SoftwareDesign](SoftwareDesign.png)
 
-## MVP
+# MVP
 The basic and minimum need for this product is to have a method of refreshing cards without latency and update the digital deck of at least 4 electronic cards without latency. The functionality shall be seamless as it would be when using a normal paper card deck. The end goal is to have wireless functionality between the digital card deck
+
+# E Cards Techonology
+The electronic cards would be implemented using electronic paper, a technology that uses very low power consumption, is flexible and mimics the look of real paper. Electronic paper uses electronic ink which is comprised of millions of microcapsules that contain a positive or negative charge, when provided a charge, the microcapsules move through a microscopic liquid towards the face of the card.
+
+![Image showing simple explanation of how epaper displays function.](https://www.smartcity-displays.com/wp-content/uploads/2017/07/how-does-e-paper-work-1.gif)
+* Source: https://www.smartcity-displays.com/wp-content/uploads/2017/07/how-does-e-paper-work-1.gif
