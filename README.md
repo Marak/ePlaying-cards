@@ -1,5 +1,5 @@
 # Anycard ePlaying-cards
-Hardware project for e-paper based playing card deck.
+Software and hardware project for e-paper based playing card deck.
 
 ## Anycard Product Mission
 Fun and new card game product that provides users the flexibility to play as many games as they wish with the use of just one digital card deck. 
@@ -64,6 +64,12 @@ Each game rule set will be a separate component in order have the ability to sca
 
 # MVP
 The basic and minimum need for this product is to have a method of refreshing cards without latency and update the digital deck of at least 4 electronic cards without latency. The functionality shall be seamless as it would be when using a normal paper card deck. For game play, the goal is to create a simple prototype game which will show case the functionality of each of the components listed above. 
+
+# Prototype
+![PrototypeSetup](proto_setup.jpg)
+
+### Raspberry Pi and RFID Wireup
+![RPi-RFID-Wireup](rasppi_rfid.png)
 
 # E Cards Techonology
 The electronic cards would be implemented using electronic paper, a technology that uses very low power consumption, is flexible and mimics the look of real paper. Electronic paper uses electronic ink which is comprised of millions of microcapsules that contain a positive or negative charge, when provided a charge, the microcapsules move through a microscopic liquid towards the face of the card.
