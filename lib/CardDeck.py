@@ -44,12 +44,3 @@ class CardDeck(object):
             random.shuffle(self.cards)
         except Exception as err:
             print("Something went wrong shuffling the cards: {}", format(err))
-
-# def main():
-#     deck = CardDeck(namespace="../game/decks")
-#     print([i.suit for i in deck.cards])
-#     deck.shuffle()
-#     print([i.suit for i in deck.cards])
-
-# if __name__== "__main__":
-#   main()
