@@ -1,6 +1,6 @@
 # Copyright 2019 Amanda Justiniano amjustin@bu.edu
 
-import CardDeck
+from lib import CardDeck
 
 
 class Hand(object):
@@ -23,9 +23,10 @@ class Hand(object):
     def collect(self):
         """ Collect cards that belong to hand."""
 
+
 class Game(object):
     """Central game framework class."""
-    def __init__(self, deck_type, players=2):
+    def __init__(self, deck_type="standard", players=2):
         """Create a template game object which will be the base object for
         all games.
 
@@ -34,18 +35,20 @@ class Game(object):
             players (int, optional): The number of players for the game.
                 Defaults to 2.
         """
-        self.deck = CardDeck() # will create standard 52 card deck
+        self.deck = CardDeck()  # will create standard 52 card deck
+        self.graveyard = []  # The graveyard starts empty on init of game.
         self.hands = {}
         self.players = players
 
-    def __create_hand(self):
-        """Create Hands for Players."""
-        for player in range(self.players):
-            self.hands[player] = Hand()
+    def create_hand(self):
+        """Create Hands for Players. This method should overrided by each
+        individual game."""
+        pass
 
     def deal_cards(self):
-        """Distribute cards to each player."""
-
+        """Distribute cards to each player. This method should overrided by
+        each individual game."""
+        pass
 
     def discard(self, cards):
         """Place cards in game graveyard pile.
@@ -55,9 +58,10 @@ class Game(object):
         """
         try:
             for card in cards:
-                graveyard.append(card)
+                self.graveyard.append(card)
         except Exception as err:
-            print("Something went wrong on the graveyard. ERR: {}".format(err))
+            print("Something went wrong dicarding cards: {} ERR: {}".format(
+                cards, err))
 
     def save(self):
         """Save the progress of the game. This method will save game data to
