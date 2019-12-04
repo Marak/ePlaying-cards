@@ -3,7 +3,6 @@
 from lib import Game
 from lib import CardDeck
 
-
 """
 Reference: https://bicyclecards.com/how-to-play/war/
 THE DEAL
