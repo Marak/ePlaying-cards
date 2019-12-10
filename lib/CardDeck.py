@@ -7,10 +7,11 @@ import random
 
 class Card(object):
     """Card object."""
-    def __init__(self, value, suit):
+    def __init__(self, value, suit, color=None):
         """Create a Card object"""
         self.value = value
         self.suit = suit
+        self.color = color
 
 
 class CardDeck(object):
@@ -31,9 +32,11 @@ class CardDeck(object):
     def __create_deck(self):
         """ Create CardDeck."""
         try:
-            for suit in self.suits:
-                for val in self.values:
-                    self.cards.append(Card(val, suit))
+            for colors in self.suits:
+                for color, suits in colors.items():
+                    for suit in suits:
+                        for val in self.values:
+                            self.cards.append(Card(val, suit, color))
         except Exception as err:
             print("Something went wrong creating deck: {} ERR: {}".format(
                 self.name, err))
