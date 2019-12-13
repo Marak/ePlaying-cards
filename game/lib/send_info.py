@@ -5,9 +5,9 @@ data to the arduino in string form through
 I2C bus.
 """
 
-# import smbus
+import smbus
 
-# bus = smbus.SMBus(1)
+bus = smbus.SMBus(1)
 
 # This is the address setup in arduino program
 address = 0x04
@@ -19,12 +19,11 @@ def __StringToBytes(value):
     return retVal
 
 def writeData(value):
-    # byteValue = __StringToBytes(value)
-    # bus.write_i2c_block_data(address, 0x00, byteValue)
     print("Writing {}".format(value))
+    byteValue = __StringToBytes(value)
+    bus.write_i2c_block_data(address, 0x00, byteValue)
     return -1
 
 def readData():
-    # data = bus.read_byte(address)
-    # return data
-    return 0
+    data = bus.read_byte(address)
+    return data

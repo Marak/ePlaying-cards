@@ -4,6 +4,8 @@
     Link: https://kivy.org/doc/stable/api-kivy.uix.accordion.html
 """
 
+import logging
+import _thread as thread
 from kivy.uix.accordion import Accordion, AccordionItem
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
@@ -11,8 +13,11 @@ from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.app import App
 
+from game.War import War
+
 """ TODO: Port this to a json file
 """
+GAME = ""
 games_available = {
                 'Brisca':
                 {
@@ -60,15 +65,30 @@ games_available = {
                 }
               }
 
+
 class AnyCardApp(App):
+
+    def register_cb(self, btn):
+        self.game.init()
+
+    def start_cb(self, btn):
+        self.game.start()
+
     def build(self):
-        root = Accordion(orientation='vertical')
-        root.cols=2
+        # Create game object
+        self.game = War()
+
+        # Create logger
+        self.log = logging.getLogger()
+        self.log.level = logging.DEBUG
+
+        self.root = Accordion(orientation='vertical')
+        self.root.cols=2
         game_titles = list(games_available.keys())
         for i in range(len(game_titles)):
             """ Add each game title to accordion
             """
-            item = AccordionItem(title='{}'.format(game_titles[i]))
+            self.item = AccordionItem(title='{}'.format(game_titles[i]))
 
             """ Left hand side; description for each game
             """
@@ -77,29 +97,40 @@ class AnyCardApp(App):
                                       markup=True,
                                       halign='left'))
             left_col.add_widget(Label(text=''))
-            
+
             curr_game = game_titles[i]
             game_details = games_available[curr_game]
             for info_title in games_available[curr_game].keys():
-                left_col.add_widget(Label(text='[size=25][b]{}[/b][/size]\n[size=15]{}[/size]'.format(info_title,game_details[info_title]), 
+                left_col.add_widget(Label(text='[size=25][b]{}[/b][/size]\n[size=15]{}[/size]'.format(info_title,game_details[info_title]),
                                               markup=True,
                                               text_size=(400,None),
                                               halign='left',
                                               padding=(5,5)))
                 left_col.add_widget(Label(text=''))
 
-            item.add_widget(left_col)
+            self.item.add_widget(left_col)
 
             """ Right hand side; register cards and game start
             """
+            # self.game = game_titles[i]
+            # Create buttons
+            self.register = Button(text='Register')
+            self.register.bind(on_press=self.register_cb)
+
+            self.start = Button(text='Start Game')
+            self.start.bind(on_press=self.start_cb)
+
+            # Create labels and buttons
+            self.register_lb = Label(text='Cards registered: {}'.format(0))
+
             right_col = GridLayout(cols=2)
-            right_col.add_widget(Label(text='Cards registered: {}'.format(0)))
-            right_col.add_widget(Button(text='Register'))
+            right_col.add_widget(self.register_lb)
+            right_col.add_widget(self.register)
             right_col.add_widget(Label(text=''))
-            right_col.add_widget(Button(text='Start Game'))
-            item.add_widget(right_col)
-            root.add_widget(item)
-        return root
+            right_col.add_widget(self.start)
+            self.item.add_widget(right_col)
+            self.root.add_widget(self.item)
+        return self.root
 
 
 if __name__ == '__main__':

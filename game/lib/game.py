@@ -1,12 +1,13 @@
 # Copyright 2019 Amanda Justiniano amjustin@bu.edu
 
-from lib import CardDeck
-from time import sleep
-from rfid_info import get_card
-from send_info import writeData
-
 import sys
 import logging
+
+from time import sleep
+from .deck import CardDeck
+from .rfid_info import get_card
+from .send_info import writeData
+
 
 class GameFailure(Exception):
     """Base exception for this module."""
@@ -39,7 +40,7 @@ class Hand(object):
     def register(self, req_hw):
         """ Register the cards that will be playing for this hand."""
         try:
-            while(self.rfids < req_hw)
+            while(len(self.rfids) < req_hw):
                 self.rfids.append(get_card())
         except Exception as err:
             print("Something went wrong getting RFIDs! ERR {}".format(err))
@@ -58,7 +59,7 @@ class Game(object):
                 Defaults to 2.
         """
         self.name = name
-        self.deck = CardDeck(deck_type)  # will create standard 52 card deck
+        self.deck = CardDeck(name=deck_type)  # will create standard 52 card deck
         self.graveyard = []  # The graveyard starts empty on init of game.
         self.hands = {}
         self.players = players
@@ -79,16 +80,17 @@ class Game(object):
 
     def is_turn(self, player_hw):
         """Check if it is the players turn given the provided RFID value."""
-        status = True
-        player = get_player(player_hw)
-        if self.hands[player].turn == False:
-            status = False
+        status = False
+        player = self.get_player(player_hw)
+        if self.hands[player].turn == True:
+            status = True
 
         return status
 
     def get_player(self, player_hw):
         """Get player ID from the provided RFID value."""
         found = False
+        ret_player = None
         for player in range(self.players):
             if player_hw in self.hands[player].rfids:
                 ret_player = player
@@ -113,7 +115,7 @@ class Game(object):
         """Initialize the game, setup the HW cards and virtual deck."""
         print("Welcome to game of {}.".format(self.name))
         try:
-            create_hands()
+            self.create_hands()
         except Exception as err:
             print("Something went wrong dealing the cards. ERR: {}".format(err))
 

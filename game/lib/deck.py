@@ -16,7 +16,7 @@ class Card(object):
 
 class CardDeck(object):
     """Create Card Deck."""
-    def __init__(self, name="standard", namespace="/decks"):
+    def __init__(self, name="standard", namespace="game/lib/decks"):
         """Create CardDeck object."""
         deck_info = open("{}/{}.yaml".format(namespace, name))
         deck_dict = yaml.safe_load(deck_info)

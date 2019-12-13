@@ -1,10 +1,10 @@
 # Copyright 2019 Amanda Justiniano amjustin@bu.edu
 
-from lib import Game
-from lib import CardDeck
-
 import logging
 import time
+
+from game.lib.game import Game, Hand, GameFailure
+
 
 """
 Reference: https://bicyclecards.com/how-to-play/war/
@@ -33,10 +33,7 @@ class War(Game):
     """Create an instance of the game War."""
     def __init__(self):
         """Initialize a War game object."""
-        super(War, self).__init__(1, "standard", 2)
-
-        # Create deck for the game
-        self.deck = CardDeck(namespace="../game/decks")
+        super(War, self).__init__("War", 2)
         self.in_play = []
 
     def switch_turns(self):
@@ -58,14 +55,32 @@ class War(Game):
         card_value2 = current_round[1][1].value
 
         if card_value1 > card_value2:
-            winner = card_value1
+            winner = list(current_round[0].keys())
         elif card_value2 > card_value1:
-            winner = card_value2
+            winner = list(current_round[1].keys())
+        elif card_value1 == card_value2:
+            print("We have a tie!")
+            return -1
 
-        return winner
+        print("Player {} won this round!".format(winner))
+        return winner[-1]
+
+    def distribute(self, winner, current_round):
+        """Distribute the cards to each hand given the winner."""
+
+        if (winner != -1):
+            # Append both cards to the winners hand
+            self.hands[winner].dead.append(current_round[0][0])
+            self.hands[winner].dead.append(current_round[1][1])
+
+        # If there was a tie, put back the cards
+        self.hands[0].active.append(current_round[0][0])
+        self.hands[1].active.append(current_round[1][1])
+
 
     def create_hands(self):
         """Create Hands for players. (player:deck) dictionary."""
+        print("Creating hands!")
         # Shuffle the deck
         self.deck.shuffle()
 
@@ -74,26 +89,31 @@ class War(Game):
         deck_halves = [self.deck.cards[:deck_half], self.deck.cards[deck_half:]]
         for player in range(self.players):
             self.hands[player] = Hand(deck_halves[player])
-            self.hands[player].register(self.req_hw)
+            self.hands[player].register(self.req_hw/self.players)
+            print("Got RFID: {}".format(self.hands[player].rfids[-1]))
 
         # Set the first player turn to True so they can start
         self.hands[0].turn = True
+        print("Done registering players!")
 
     def get_player_info(self):
         """Get the information for the player and display the card value."""
         current = {}
         # Get hw card info from player
-        player_hw = self.get_hw()
-        if not self.is_turn(player_hw):
-            continue
+        while True:
+            player_hw = self.get_hw()
+            if self.is_turn(player_hw):
+                break
+            print("It's not your turn!")
 
         # Get a value from the deck to display onto the card
         card = self.hands[self.get_player(player_hw)].active.pop(0)
         current[self.get_player(player_hw)] = card
 
         # Display card onto ePaper
+        print("Playing card: {} {} {}".format(card.color, card.value, card.suit))
         self.send_info("{} {} {}".format(card.color, card.value, card.suit))
-        time.sleep(10)
+        time.sleep(15)
 
         self.switch_turns()
 
@@ -105,16 +125,26 @@ class War(Game):
         print("Cards are dealt, lets start playing!")
         while(len(self.hands[0].dead) < 52 and len(self.hands[1].dead) < 52):
             # Start up the gameplay!
-            cur_round=[]
-            print("Player, place a card:")
+            curr_round=[]
+
+            # Get the cards from the players
             for player in range(self.players):
-                cur_round.append(get_player_info())
+                print("Player {}: Please place a card:".format(player))
+                curr_round.append(self.get_player_info())
 
             # Check who won the round.
-            self.check_winner()
-
-
+            winner = self.check_winner(curr_round)
 
             # Distributions for each hand after determination of winner
+            self.distribute(winner, curr_round)
 
-            # Update the score?? This game doesn't need score technically.
+            for player in range(self.players):
+                print("Player {} has {} cards in there hands.".format(
+                    player, len(self.hands[player].active)))
+
+        for player in range(self.players):
+            if len(self.hands[player].dead) >= 52:
+                print("Player {} you won!!".format(player))
+                break
+
+        return True
